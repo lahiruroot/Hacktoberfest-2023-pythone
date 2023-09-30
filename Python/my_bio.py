@@ -1,12 +1,20 @@
+import datetime
 # Get the user's name as input
 name = input("Enter your name: ")
 
-# Get the user's birth year as input and convert it to an integer
-birth_year = int(input("Enter your birth year: "))
+# Get the user's date of birth as input
+date_of_birth = input("Enter your date of birth (YYYY-MM-DD): ")
 
-# Calculate the user's age
-current_year = 2023  # You can change this to the current year
-age = current_year - birth_year
+# Convert the date of birth to a datetime object
+date_of_birth = datetime.datetime.strptime(date_of_birth, "%Y-%m-%d")
 
-# Print the greeting with the user's name and age
-print(f"Hello {name}, your age is {age} years old.")
+# Get the current date as a datetime object
+current_date = datetime.datetime.today()
+
+# Calculate the difference between the user's date of birth and the current date
+age_in_days = int((current_date - date_of_birth).days) 
+age_in_months = int((current_date - date_of_birth).days / 30.4167)
+age_in_years = int((current_date - date_of_birth).days / (30.4167*12))
+
+# Print the user's age in months
+print(f"You are {age_in_years} years or {age_in_months} months or {age_in_days} old.")
