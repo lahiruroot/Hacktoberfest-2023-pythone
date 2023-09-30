@@ -1,12 +1,11 @@
-# Get the user's name as input
-name = input("Enter your name: ")
+# Program to check input
+# type in Python
 
-# Get the user's birth year as input and convert it to an integer
-birth_year = int(input("Enter your birth year: "))
+num = input ("Enter number :")
+print(num)
+name1 = input("Enter name : ")
+print(name1)
 
-# Calculate the user's age
-current_year = 2023  # You can change this to the current year
-age = current_year - birth_year
-
-# Print the greeting with the user's name and age
-print(f"Hello {name}, your age is {age} years old.")
+# Printing type of input value
+print ("type of number", type(num))
+print ("type of name", type(name1))
