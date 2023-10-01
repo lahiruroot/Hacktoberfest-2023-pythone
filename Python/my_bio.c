@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h> // Include the stdbool.h library for boolean support
+#include <string.h>  // Include the string.h header for strcspn
 
 int main() {
     char name[100];  // Assuming a maximum name length of 100 characters
@@ -17,7 +19,7 @@ int main() {
     }
 
     // Get the user's birth year as input and handle invalid input
-    while (1) {
+    while (true) {
         printf("Enter your birth year: ");
         if (scanf("%d", &birth_year) != 1) {
             while (getchar() != '\n');  // Clear the input buffer
@@ -33,6 +35,21 @@ int main() {
 
     // Print the greeting with the user's name and age
     printf("Hello %s, your age is %d years old.\n", name, age);
+
+        if (age >= 65) {
+        printf("Congratulations, you are a senior citizen!\n");
+    }
+
+    // Add an option to print the age in months and days
+    char response;
+    printf("Do you want to see your age in months and days (y/n)? ");
+    scanf(" %c", &response); // Read a single character, ignoring whitespace
+
+    if (response == 'y' || response == 'Y') {
+        int months = age * 12;
+        int days = age * 365; // Assuming a year has 365 days
+        printf("Your age is approximately %d months and %d days.\n", months, days);
+    }
 
     return 0;
 }
