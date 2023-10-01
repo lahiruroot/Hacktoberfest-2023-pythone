@@ -1,6 +1,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// Function to get a valid integer input from the user
+int getValidIntegerInput() {
+    int value;
+    char buffer[100];
+    while (1) {
+        if (fgets(buffer, sizeof(buffer), stdin) == NULL) {
+            exit(1);  // Handle EOF (e.g., Ctrl+D on Unix) gracefully
+        }
+        if (sscanf(buffer, "%d", &value) == 1) {
+            return value;  // Return the valid integer
+        } else {
+            printf("Invalid input. Please enter a valid number: ");
+        }
+    }
+}
+
 int main() {
     char name[100];  // Assuming a maximum name length of 100 characters
     int birth_year;
@@ -16,16 +32,9 @@ int main() {
         name[strcspn(name, "\n")] = '\0';  // Remove the newline character
     }
 
-    // Get the user's birth year as input and handle invalid input
-    while (1) {
-        printf("Enter your birth year: ");
-        if (scanf("%d", &birth_year) != 1) {
-            while (getchar() != '\n');  // Clear the input buffer
-            printf("Invalid input. Please enter a valid year.\n");
-        } else {
-            break;  // Exit the loop if the input is a valid integer
-        }
-    }
+    // Get the user's birth year as input
+    printf("Enter your birth year: ");
+    birth_year = getValidIntegerInput();
 
     // Calculate the user's age
     int current_year = 2023;  // You can change this to the current year
