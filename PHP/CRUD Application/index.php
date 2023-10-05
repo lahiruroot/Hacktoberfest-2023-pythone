@@ -1,58 +1,77 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Assignment</title>
-    <style>
-            table {
-                border-collapse:collapse;
-                border: 1px solid black;
-            }
-            td,th{  border: 1px solid black;
-                border-collapse:border;
-            }
-        </style>
-</head>
-<body>
-    
-<table>
-            <tr>
-                <th>Id</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>E-mail</th>
-                <th>Address</th>
-                <th>Number</th>
-                <th>Delete</th>
-                <th>update</th>
+import React, { useState, useEffect } from 'react';
 
+function EmployeeTable() {
+  const [employeeData, setEmployeeData] = useState([]);
+
+  useEffect(() => {
+    // Fetch data from your API or server here
+    // Example:
+    fetch('/api/employee')
+      .then((response) => response.json())
+      .then((data) => setEmployeeData(data))
+      .catch((error) => console.error('Error fetching data:', error));
+  }, []);
+
+  return (
+    <div>
+      <h1>Assignment</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>E-mail</th>
+            <th>Address</th>
+            <th>Number</th>
+            <th>Delete</th>
+            <th>Update</th>
+          </tr>
+        </thead>
+        <tbody>
+          {employeeData.map((employee) => (
+            <tr key={employee.id}>
+              <td>{employee.id}</td>
+              <td>{employee.first_name}</td>
+              <td>{employee.last_name}</td>
+              <td>{employee.email}</td>
+              <td>{employee.address}</td>
+              <td>{employee.number}</td>
+              <td>
+                <a
+                  href={`delete.php?id=${employee.id}`}
+                  onClick={() => {
+                    const confirmDelete = window.confirm('Are you sure?');
+                    if (!confirmDelete) {
+                      return false;
+                    }
+                  }}
+                >
+                  Delete
+                </a>
+              </td>
+              <td>
+                <a
+                  href={`edit.php?id=${employee.id}`}
+                  onClick={() => {
+                    const confirmUpdate = window.confirm('Are you sure?');
+                    if (!confirmUpdate) {
+                      return false;
+                    }
+                  }}
+                >
+                  Update
+                </a>
+              </td>
             </tr>
-            <?php
-            include("Php and Database Connection.php");
-    // select query showing data
-            $qry = "SELECT * FROM employee";
-            $result =  $conn->query($qry);
-            if($result->num_rows>0){
-                while ($row = $result->fetch_assoc()){
-                    echo "<tr>";
-                        echo "<td>".$row['id']."</td>";
-                        echo "<td>".$row['first_name']."</td>";
-                        echo "<td>".$row['last_name']."</td>";
-                        echo "<td>".$row['email']."</td>";
-                        echo "<td>".$row['address']."</td>";
-                        echo "<td>".$row['number']."</td>";
-                        echo "<td><a onclick = 'return confirm(\"are you sure?\") 'href= 'delete.php?id=".$row['id']."'>Delete</a> </td>";
-                        echo "<td><a onclick = 'return confirm(\"are you sure?\") 'href= 'edit.php?id=".$row['id']."'>update</a> </td>";
-                    echo "<tr>";
-                }
-            }
-            ?>
+          ))}
+        </tbody>
+      </table>
+      <h3>
+        <a href="insert.php">Add new record</a>
+      </h3>
+    </div>
+  );
+}
 
-        </table>
-        <h3><a href="insert.php"><br>Add new record</a></h3>
-
-
-</body>
-</html>
+export default EmployeeTable;
